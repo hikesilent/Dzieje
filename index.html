@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DziejeTV - Odkrywaj Historię z Nami!</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&family=Merriweather:wght@300;400;700&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Globalne style */
+        html {
+            height: 100%;
+        }
+        body {
+            font-family: 'Merriweather', serif;
+            background-color: #3a2e2a;
+            color: #5a4b40;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48ZmlsdGVyIGlkPSJub2lzZSIgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSI+PGZlVHVyYmVsZW5jZSB0eXBlPSJmcmFjdGFhbE5vaXNlIiBiYXNlRnJlcXVlbmN5PSIwLjciIG51bU9jdGF2ZXM9IjQiIHJlc3VsdD0ibm9pc2UiIC8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMzAyZTJhIi8+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNub2lzZSkvaWNvbiIvPjwvc3ZnPg==');
+            background-size: cover;
+            perspective: 1500px;
+            flex-direction: column;
+            overflow-x: hidden; /* Dodane dla pewności, że nie ma poziomego scrolla z animacji */
+        }
+
+        /* Kontener główny - nasz "zwój" */
+        .scroll-container {
+            position: relative;
+            background-color: #fffaf0;
+            border: 1px solid #8B4513;
+            border-radius: 5px;
+            padding: 50px 60px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4),
+                        0 0 10px rgba(0, 0, 0, 0.2) inset;
+            max-width: 700px;
+            width: 90%;
+            text-align: center;
+            transform-style: preserve-3d;
+            box-sizing: border-box;
+            overflow: hidden;
+
+            background-image:
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><filter id="f1" x="0" y="0"><feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="3" result="noise" /><feDiffuseLighting in="noise" lightingColor="#fffaf0" surfaceScale="2"><feDistantLight azimuth="235" elevation="60" /></feDiffuseLighting><feComposite operator="in" in="SourceGraphic" in2="diffuseLighting" /></filter><rect width="100%" height="100%" fill="#fffaf0" filter="url(#f1)" /></svg>'),
+                radial-gradient(ellipse at 10% 10%, rgba(139, 69, 19, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 90%, rgba(139, 69, 19, 0.1) 0%, transparent 50%),
+                linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, transparent 50%, rgba(0, 0, 0, 0.1) 100%);
+            background-size: cover;
+            background-blend-mode: multiply;
+
+            height: 0;
+            opacity: 0;
+            animation: unfoldScroll 3.8s forwards cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s; /* Dłuższy czas i bardziej dynamiczna funkcja czasowa */
+            transform-origin: top center; /* Ważne dla naturalnego rozwijania od góry */
+            transform: rotateX(90deg) scaleY(0.01); /* Bardziej złożony początek */
+        }
+
+        /* Zawartość zwoju */
+        .scroll-content {
+            opacity: 0;
+            animation: fadeInContent 1.8s forwards ease-in 3.2s; /* Dłuższe pojawianie się po rozwinięciu */
+        }
+
+        /* Keyframes dla animacji rozwijania */
+        @keyframes unfoldScroll {
+            0% {
+                height: 0;
+                opacity: 0;
+                transform: rotateX(90deg) scaleY(0.01) translateZ(-200px); /* Zwój na początku jest "daleko" i mocno zrolowany */
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            }
+            15% {
+                height: 5%;
+                opacity: 0.3;
+                transform: rotateX(80deg) scaleY(0.1) translateZ(-150px);
+            }
+            40% {
+                height: 40%;
+                opacity: 0.7;
+                transform: rotateX(50deg) scaleY(0.4) translateZ(-70px);
+            }
+            75% {
+                height: 90%;
+                opacity: 0.95;
+                transform: rotateX(10deg) scaleY(0.95) translateZ(-10px);
+            }
+            100% {
+                height: auto;
+                opacity: 1;
+                transform: rotateX(5deg) scaleY(1) translateZ(0px); /* Delikatne przekrzywienie na końcu */
+                box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), inset 0 0 10px rgba(0, 0, 0, 0.2);
+            }
+        }
+
+        /* Keyframes dla animacji pojawiania się zawartości */
+        @keyframes fadeInContent {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Efekt zwiniętych brzegów - utrzymany dla estetyki */
+        .scroll-container::before,
+        .scroll-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            width: 30px;
+            height: 100%;
+            background-color: #f7e6c4;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+            z-index: -1;
+            border-radius: 0 0 10px 10px;
+        }
+
+        .scroll-container::before {
+            left: -20px;
+            transform: rotateY(20deg) scaleX(0.9);
+            border-right: 1px solid #8B4513;
+        }
+
+        .scroll-container::after {
+            right: -20px;
+            transform: rotateY(-20deg) scaleX(0.9);
+            border-left: 1px solid #8B4513;
+        }
+
+        /* Nagłówek - bardziej ozdobny */
+        h1 {
+            font-family: 'Cinzel', serif;
+            color: #4a3b30;
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            letter-spacing: 2px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        h1::after {
+            content: '';
+            display: block;
+            width: 120px;
+            height: 3px;
+            background: linear-gradient(to right, transparent, #8B4513, transparent);
+            margin: 15px auto 0;
+        }
+
+        /* Tekst */
+        p {
+            font-family: 'Old Standard TT', serif;
+            font-size: 1.2em;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            text-align: justify;
+            text-indent: 30px;
+            color: #4a3b30;
+        }
+
+        p:first-of-type::first-letter {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5em;
+            float: left;
+            margin-right: 5px;
+            color: #8B4513;
+            line-height: 0.8;
+        }
+
+        /* Przyciski social media */
+        .social-links {
+            margin-top: 40px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .social-links a {
+            background-color: #8B4513;
+            color: #fff;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            font-family: 'Cinzel', serif;
+            font-size: 1.3em;
+            border: 2px solid #5a2e12;
+            box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .social-links a:hover {
+            background-color: #A0522D;
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        .social-links a:active {
+            transform: translateY(0);
+            box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Stopka */
+        footer {
+            margin-top: 50px;
+            font-size: 0.95em;
+            color: #7a6b60;
+            font-family: 'Merriweather', serif;
+        }
+
+        /* Responsywność */
+        @media (max-width: 768px) {
+            .scroll-container {
+                padding: 30px 40px;
+                width: 95%;
+            }
+
+            h1 {
+                font-size: 2.5em;
+            }
+
+            p {
+                font-size: 1.1em;
+                text-indent: 20px;
+            }
+
+            .social-links a {
+                padding: 12px 20px;
+                font-size: 1.1em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .scroll-container {
+                padding: 20px 25px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            p {
+                font-size: 1em;
+                text-indent: 15px;
+            }
+
+            .social-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .social-links a {
+                width: 80%;
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="scroll-container">
+        <div class="scroll-content">
+            <h1>DziejeTV</h1>
+            <p>Witajcie, poszukiwacze historii! Jako DziejeTV, z dumą prezentujemy Wam cyfrowy zwój, który przeniesie Was w **głąb fascynujących wydarzeń minionych stuleci**. Przygotujcie się na podróż, gdzie każda opowieść, każdy fakt i każda analiza jest starannie wydobywana z annałów historii, by ożywić ją na nowo przed Waszymi oczami.</p>
+            <p>Nasze kanały to **brama do świata, w którym przeszłość nigdy nie umiera**. Odkryjemy razem mało znane postacie, rozwiążemy tajemnice zapomniane przez czas i zrozumiemy, jak wielkie wydarzenia kształtowały cywilizacje. Przyłączcie się do nas, by wspólnie rozszyfrować kroniki dawnych epok i zobaczyć historię w zupełnie nowym, olśniewającym świetle!</p>
+            <p>Niech ta strona będzie Waszym pierwszym przystankiem w tej niezwykłej eskapadzie. Zanurzcie się w opowieściach, które czekają, by być odkrytymi!</p>
+
+            <div class="social-links">
+                <a href="https://www.youtube.com/@dziejetv" target="_blank" rel="noopener noreferrer">Kanał YouTube</a>
+                <a href="https://www.tiktok.com/@dziejetv" target="_blank" rel="noopener noreferrer">Kanał TikTok</a>
+            </div>
+
+            <footer>
+                <p>Odkrywaj Historię z DziejeTV. Wszelkie prawa zastrzeżone. © 2025</p>
+                <p>Śledź nasze poczynania i bądź na bieżąco z najnowszymi odkryciami!</p>
+            </footer>
+        </div>
+    </div>
+</body>
+</html>
